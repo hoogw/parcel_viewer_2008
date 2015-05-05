@@ -1,0 +1,78 @@
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<html>
+<HEAD>
+<script language="javascript">
+	var t;
+	var t2 = "";
+	if (opener) {
+		t = opener.parent.MapFrame;
+		t2 = "opener.parent.MapFrame";
+	} else {
+		t = parent.MapFrame;
+		t2 = "parent.MapFrame";
+	}
+	function doBuffer() {
+		var f = document.forms[0];
+		t.bufferDistance = f.theDistance.value;
+		theIndex = f.theTarget.selectedIndex;
+		if (theIndex>0) {
+			t.bufferTargetLayer = f.theTarget.options[theIndex].text;
+			t.bufferTargetLayerIndex = parseInt(f.theTarget.options[theIndex].value);
+			t.getBufferedData = f.getData.checked;
+			t.drawTargetLayer=true;
+		} else {
+			t.drawTargetLayer=false;
+			t.getBufferedData = false;
+		}
+		if (parseFloat(f.theDistance.value)>=0) {
+			t.bufferIt();
+		} else {
+			alert(t.t.msgList[81]);
+		}
+	}
+	document.writeln('</head>');
+	document.writeln('<body bgcolor="' + t.textFrameBackColor + '" text="white" leftmargin=0 topmargin=0 onload="window.focus()">');
+	document.writeln('<div align="center"><form onsubmit="doBuffer(); return false;">');
+	document.writeln('<table cellspacing="2" cellpadding="0" bgcolor="' + t.textFrameFormColor + '" width=100%>');
+	document.writeln('<tr><td align="CENTER"><FONT face=Arial><STRONG>Buffer</STRONG></FONT></td></tr>');
+	// /*
+	document.writeln('<tr><td align="CENTER"><font face="Arial" size="-2">' + t.msgList[82]);
+	document.writeln('<SELECT  name=theTarget>');
+	document.writeln('<option value=-1>' + t.msgList[87]);
+	for (var i=0;i<t.layerCount;i++) {
+		if (t.LayerType[i]!="image") {
+			document.writeln('<option value=' + i + '>' + t.LayerName[i]);
+		}
+	}
+	document.writeln('</SELECT>');
+	document.writeln(t.msgList[83] + '<input type="Text" name="theDistance" value="0" size="5"> ');
+	var j = 1;
+	for (var i=0;i<t.sUnitList.length;i++) {
+		if (t.ScaleBarUnits==t.sUnitList[i]) j=i;
+	}
+
+	document.writeln(t.sUnitList[j]);
+	// */
+	//document.writeln('&nbsp;of the selected features of&nbsp;');
+	//document.writeln('<tr><td align="CENTER"><font face="Arial" size="-2">Display a buffer of&nbsp; ');
+	//document.writeln('<input type="Text" name="theDistance" value="0" size="5">&nbsp;');
+	//document.writeln(ScaleBarUnits);
+	
+	document.writeln(t.msgList[84]);
+	document.writeln(t.LayerName[t.ActiveLayerIndex]);
+	document.writeln('</font></td></tr>');
+	document.writeln('<tr><td align="CENTER">');
+	document.writeln('<input type="Button" name="theButton" value="' + t.buttonList[9] + '" onclick="doBuffer()">');
+	document.write('<INPUT TYPE="checkbox" NAME="getData" VALUE="' + t.buttonList[10] + '"');
+	if (t.getBufferedData) {
+		document.write(' CHECKED');
+	}
+	// Currently disabled 
+	//document.write(' DISABLED');
+	
+	document.writeln('><font face="Arial" size="-2">' + t.msgList[85] + '</font>');
+	document.writeln('</td></tr>');
+	document.writeln('</table></form></div></body>');
+</script>
+</html>

@@ -1,0 +1,37 @@
+ContactName	Kyler Diershaw
+ContactEmail	kyler@geoprise.net
+ContactPhone	951-313-3896
+ContactFax	
+CompanyName	GeoPrise.net
+CompanyAddress	19000 Grovewood Drive
+CompanyCity	Corona
+CompanyState	CA
+CompanyZip	92881
+ProfileCreator	DaveF
+ProfileDate	2006/09/20
+UserAgreement	0
+RegCompanyName	GeoPrise.net
+RegContactName	Kyler Diershaw
+RegContactPhone	951-313-3896
+RegContactEmail	kyler@geoprise.net
+LibraryString	CAORAN05,
+DomainString	9F9588819F894A86839F9D86454D7350526D6A546C686C659FA5A8B19FA9,
+OptionHash	BK34WBB2YG
+ActivationDate	2006/09/20
+ActivationTime	1158724800
+TerminationDate	2008/06/30
+TerminationTime	1214798400
+CPIDLength	20
+CPIDString	01E4938A1DE2F642C28909FA15F1FF772C94FD8B
+UserLicenseLength	64
+UserLicenseString	3D74A3D926BCEB470427546D950DD151C7879442EC0E520FC9229F619D1FF64B52F9342332A9B588A480C62F4BA21695FFDA6BAB47297A51C2DD025EE4526609
+OptionCount	6
+Option0Value	00000015	Elevation Tool Option
+Option1Value	00000048	Not valid for EFS
+Option2Value	00000059	Pictometry ActiveX Viewer
+Option3Value	00004097	Timed License
+Option4Value	00004100	Named Library License
+Option5Value	00004105	Site License
+Comment	ActiveX Support for SDK and IMS thru 6-30-08 (matches City of Costa Mesa)
+LicenseGrantor	mikeh
+LicenseDate	2006/10/10

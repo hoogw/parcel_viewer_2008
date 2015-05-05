@@ -1,0 +1,78 @@
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<HTML>
+<HEAD>
+	<SCRIPT LANGUAGE="JavaScript" SRC="../javascript/aimsResource.js" TYPE="text/javascript"></SCRIPT>
+	<SCRIPT type="text/javascript" language="JavaScript">
+		// Designer will set the next variable - theTitle
+		var theTitle = "###TITLE###";
+		if (theTitle.indexOf("###TITLE##")!=-1) theTitle = titleList[0];
+		var webParams = document.location.search;
+		var docTitle = "";
+		if (webParams!="") {
+			webParams = replacePlus(webParams);
+			var wpUC = webParams.toUpperCase();
+			
+			if (wpUC.indexOf("TITLE=")==-1) {
+				docTitle = "&Title=" + escape(theTitle);
+			} 
+		} else {
+			docTitle = "?Title=" + escape(theTitle);
+		}
+		document.writeln("<TITLE>" + theTitle + "</TITLE>");
+		
+		function checkBrowser() {
+
+			//if (webParams!="") alert(webParams);
+			var version = navigator.appVersion;
+			var versNum = parseFloat(version);
+			//alert(versNum);
+			var browser = navigator.appName;
+			//var userMachine = navigator.platform;
+			var itsOK = false;
+			//alert(navigator.platform);
+			//alert(browser + "\n" + version);
+			
+			if (versNum >= 4) {
+				if (navigator.platform != "MacPPC") {
+					itsOK = true;
+				
+				} else {
+					// only Netscape on Mac
+					if (browser=="Netscape") {
+						itsOK = true;
+					} else {
+						itsOk = false;
+					}
+				}
+			} else {
+					itsOk = false;
+			}
+			if (itsOK == false) {
+					document.write ('<center>' + msgList[100] + '</center>');
+			} else {
+				document.location = "viewer.htm" + webParams + docTitle;
+			}
+		}
+		
+		function replacePlus(inText) {
+			var pos=9;
+			while (pos != -1) {
+				pos = inText.indexOf('+');
+				if (pos!=-1) {
+					var lastpos = inText.length;
+					var midend = pos;
+					var midstart = pos + 1;
+					var leftSide = inText.substring(0,midend);
+					var rightSide = inText.substring(midstart,lastpos);
+					inText = leftSide + "%20" + rightSide;
+				}
+			}
+			return inText;
+		}
+	</SCRIPT>
+</HEAD>
+<BODY onLoad="checkBrowser()">
+</BODY>
+</HTML>
+
+

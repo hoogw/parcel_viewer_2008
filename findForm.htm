@@ -1,0 +1,90 @@
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<HTML>
+<HEAD>
+	<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
+		var t;
+		if (opener) {
+			if (opener.name=="MapFrame") {
+				t = opener.parent.MapFrame;
+			} else {
+				t = opener;
+			}
+		} else {
+			
+			if (parent.MapFrame) {
+				t = parent.MapFrame;
+			} else {
+				t=document;
+			}
+		}
+		document.writeln('<TITLE>' + t.modeList[17] + '</TITLE>');
+		
+		function setStyle() {
+			var f = document.forms[0];
+			var theValue = f.theStyle.value;
+			if (theValue!="") {
+				t.getFind(theValue);
+			} else {
+				alert(t.msgList[99]);
+			}
+		}
+	</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="Black" TEXT="White" TOPMARGIN=0 LEFTMARGIN=0>
+	<DIV ALIGN="center">
+		<FONT FACE="Arial" SIZE="-2"><B>
+		<FORM ACTION="" NAME="theFindForm" onsubmit="setStyle(); return false;">
+			<TABLE CELLSPACING="2" NOWRAP BGCOLOR="Gray" WIDTH=100%>
+				<TR>
+					<TH COLSPAN="2" ALIGN="CENTER">
+						<SCRIPT LANGUAGE="JavaScript" TYPE="text/javascript">
+							document.writeln('<FONT FACE="Arial" SIZE="-1"><B>' + t.modeList[17] + '</B><BR></FONT>');
+							document.writeln('<FONT FACE="Arial" SIZE="-2"><B>' + t.msgList[79] + '</B></FONT>');
+						</SCRIPT>
+					</TH>
+				</TR>
+				<TR>
+					<TD>
+						
+						<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
+							var t;
+							if (opener) {
+								if (opener.name=="MapFrame") {
+									t = opener.parent.MapFrame;
+								} else {
+									t = opener;
+								}
+								t = opener.parent.MapFrame;
+							} else {
+								
+								if (parent.MapFrame) {
+									t = parent.MapFrame;
+								} else {
+									alert(t.msgList[91]);
+								}
+							}
+							document.writeln('<FONT FACE="Arial" SIZE="-2">' + t.msgList[90]);
+							var theValue = t.LayerName[t.ActiveLayerIndex];
+								document.write(theValue);
+						
+							document.writeln(': <INPUT TYPE=TEXT NAME="theStyle" VALUE="">');
+							document.writeln('</FONT>');
+							document.writeln('</TD>');
+							document.writeln('<TD ALIGN="CENTER">');
+							document.writeln('<INPUT TYPE="Button" NAME="setDU" VALUE="' + t.msgList[92] + '" onclick="setStyle()">  <BR>');
+						</SCRIPT>
+					</TD>
+					
+				</TR>
+			</TABLE>
+		</FORM>
+		</B></FONT>
+	</DIV>
+</BODY>
+</HTML>
+<HTML>
+<HEAD>
+	<TITLE></TITLE>
+	<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+</HTML>

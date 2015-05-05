@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:s1="http://www.themindelectric.com/package/com.esri.is.services.common.v2.geom/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://www.themindelectric.com/package/com.esri.is.services.glue.v2.addressfinder/" xmlns:s3="http://www.themindelectric.com/package/java.lang/" xmlns:s2="http://www.themindelectric.com/package/com.esri.is.services.common.v2/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="http://arcweb.esri.com/v2" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" targetNamespace="http://arcweb.esri.com/v2" name="AddressFinder" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/com.esri.is.services.glue.v2.addressfinder/">
+      <xsd:complexType name="Address">
+        <xsd:sequence>
+          <xsd:element name="houseNumber" nillable="true" type="xsd:string" />
+          <xsd:element name="street" nillable="true" type="xsd:string" />
+          <xsd:element name="intersection" nillable="true" type="xsd:string" />
+          <xsd:element name="city" nillable="true" type="xsd:string" />
+          <xsd:element name="state_prov" nillable="true" type="xsd:string" />
+          <xsd:element name="zone" nillable="true" type="xsd:string" />
+          <xsd:element name="country" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AddressFinderOptions">
+        <xsd:sequence>
+          <xsd:element name="dataSource" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </s:schema>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/com.esri.is.services.common.v2.geom/">
+      <xsd:complexType name="Point">
+        <xsd:sequence>
+          <xsd:element name="x" type="xsd:double" />
+          <xsd:element name="y" type="xsd:double" />
+          <xsd:element name="coordinateSystem" nillable="true" type="s1:CoordinateSystem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CoordinateSystem">
+        <xsd:sequence>
+          <xsd:element name="projection" nillable="true" type="xsd:string" />
+          <xsd:element name="datumTransformation" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Envelope">
+        <xsd:sequence>
+          <xsd:element name="minx" type="xsd:double" />
+          <xsd:element name="miny" type="xsd:double" />
+          <xsd:element name="maxx" type="xsd:double" />
+          <xsd:element name="maxy" type="xsd:double" />
+          <xsd:element name="coordinateSystem" nillable="true" type="s1:CoordinateSystem" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </s:schema>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/com.esri.is.services.common.v2/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://www.themindelectric.com/package/com.esri.is.services.common.v2.geom/" />
+      <xsd:complexType name="LocationInfo">
+        <xsd:sequence>
+          <xsd:element name="matchType" nillable="true" type="xsd:string" />
+          <xsd:element name="candidates" nillable="true" type="s2:ArrayOfLocation" />
+          <xsd:element name="hasMore" type="xsd:boolean" />
+          <xsd:element name="errorCode" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Location">
+        <xsd:sequence>
+          <xsd:element name="point" nillable="true" type="s1:Point" />
+          <xsd:element name="description1" nillable="true" type="xsd:string" />
+          <xsd:element name="description2" nillable="true" type="xsd:string" />
+          <xsd:element name="score" type="xsd:double" />
+          <xsd:element name="matchType" nillable="true" type="xsd:string" />
+          <xsd:element name="type" nillable="true" type="xsd:string" />
+          <xsd:element name="locationExtent" nillable="true" type="s1:Envelope" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfLocation">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s2:Location[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </s:schema>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/java.lang/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOfstring">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="xsd:string[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </s:schema>
+  </types>
+  <message name="getVersion0In" />
+  <message name="getVersion0Out">
+    <part name="Result" type="s:string" />
+  </message>
+  <message name="getAddress1In">
+    <part name="point" type="s1:Point">
+      <documentation>the x,y-coordinate.</documentation>
+    </part>
+    <part name="addressFinderOptions" type="s0:AddressFinderOptions">
+      <documentation>options object.</documentation>
+    </part>
+    <part name="token" type="s:string">
+      <documentation>the authentication token.</documentation>
+    </part>
+  </message>
+  <message name="getAddress1Out">
+    <part name="Result" type="s0:Address">
+      <documentation>Address address object. </documentation>
+    </part>
+  </message>
+  <message name="findAddress2In">
+    <part name="address" type="s0:Address">
+      <documentation>the address find x,y-coordinates for.</documentation>
+    </part>
+    <part name="addressFinderOptions" type="s0:AddressFinderOptions">
+      <documentation>options object.</documentation>
+    </part>
+    <part name="token" type="s:string">
+      <documentation>the authentication token.</documentation>
+    </part>
+  </message>
+  <message name="findAddress2Out">
+    <part name="Result" type="s2:LocationInfo">
+      <documentation>LocationInfo location information object. </documentation>
+    </part>
+  </message>
+  <message name="getCountries3In">
+    <part name="datasource" type="s:string">
+      <documentation>the geocoder datasource.</documentation>
+    </part>
+    <part name="token" type="s:string">
+      <documentation>service authentication token.</documentation>
+    </part>
+  </message>
+  <message name="getCountries3Out">
+    <part name="Result" type="s3:ArrayOfstring">
+      <documentation>String[] String array of country names. </documentation>
+    </part>
+  </message>
+  <portType name="IAddressFinder">
+    <operation name="getVersion">
+      <input name="getVersion0In" message="tns:getVersion0In" />
+      <output name="getVersion0Out" message="tns:getVersion0Out" />
+    </operation>
+    <operation name="getAddress" parameterOrder="point addressFinderOptions token">
+      <documentation>Returns an address from an x,y-coordinate.</documentation>
+      <input name="getAddress1In" message="tns:getAddress1In" />
+      <output name="getAddress1Out" message="tns:getAddress1Out" />
+    </operation>
+    <operation name="findAddress" parameterOrder="address addressFinderOptions token">
+      <documentation>Returns an x,y-coordinate from an address.</documentation>
+      <input name="findAddress2In" message="tns:findAddress2In" />
+      <output name="findAddress2Out" message="tns:findAddress2Out" />
+    </operation>
+    <operation name="getCountries" parameterOrder="datasource token">
+      <documentation>Returnes an array of country names serviced by a specified datasource.</documentation>
+      <input name="getCountries3In" message="tns:getCountries3In" />
+      <output name="getCountries3Out" message="tns:getCountries3Out" />
+    </operation>
+  </portType>
+  <binding name="IAddressFinder" type="tns:IAddressFinder">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getVersion">
+      <soap:operation soapAction="getVersion" style="rpc" />
+      <input name="getVersion0In">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getVersion0Out">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getAddress">
+      <soap:operation soapAction="getAddress" style="rpc" />
+      <input name="getAddress1In">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getAddress1Out">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="findAddress">
+      <soap:operation soapAction="findAddress" style="rpc" />
+      <input name="findAddress2In">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="findAddress2Out">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getCountries">
+      <soap:operation soapAction="getCountries" style="rpc" />
+      <input name="getCountries3In">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getCountries3Out">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="AddressFinder">
+    <documentation>The Address Finder Web Service enables users to input a street address and receive a candidate list of matching addresses and associated coordinates. It also enables users to input x,y-coordinates and receive a street address. ArcWeb Service is intended to support application developers who would like to provide "find an address" and "get an address" functionality within their Internet applications.
+</documentation>
+    <port name="IAddressFinder" binding="tns:IAddressFinder">
+      <soap:address location="https://arcweb.esri.com/services/v2/AddressFinder" />
+    </port>
+  </service>
+</definitions>

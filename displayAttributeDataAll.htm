@@ -1,0 +1,181 @@
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<html>
+<HEAD>
+<script language="javascript">
+	var t_idall;
+	var t2_idall = "";
+	if (opener) {
+		t_idall = opener.parent.MapFrame;
+		t2_idall = "opener.parent.MapFrame";
+	} else {
+		t_idall = parent.MapFrame;
+		t2_idall = "parent.MapFrame";
+	}
+	document.writeln('<title>Query/Selection Results</title></head>');
+	document.writeln('<body bgcolor="' + t_idall.textFrameBackColor + '" text="Black" link="Blue" vlink="Gray" LEFTMARGIN=0 onload="window.focus()"><center>');
+	var lyrCount = 0;
+	 for (b=0;b<t_idall.replyArray.length;b++) {
+	 	if (t_idall.replyArray[b]!="") {
+		    //alert(theReply);
+			theReply = t_idall.replyArray[b];
+			t_idall.setLayerFields(b);
+			var theError = t_idall.getXMLErrorMessage(theReply);
+			var fList="";
+			var lpos1 = 1;
+			var lpos2 = 1;
+			var epos = 1;
+			var spos = 1;
+			var morePoints=true;
+			var moreFeatures=true;
+			var featureCount = t_idall.justGetFeatureCount(theReply);
+			//alert(featureCount);
+			var pos = 0;
+			var startpos = 0;
+			var endpos = t_idall.xmlEndPos;
+			var stillMore = false
+			pos = theReply.indexOf('hasmore="true"',endpos);
+			if (pos!=-1) stillMore = true;
+			pos=0;
+			var tempCount = 0;
+			var selectedData="";
+			var inData="";
+			var xStr="";
+			var yStr="";
+			var fCount = featureCount;
+			//alert("displayAttributeData()[featurecount=" + featureCount + "]");
+			t_idall.selectCount = 0;
+			var tempString="";
+			if (featureCount > 0) {
+				//alert(featureCount);
+				t_idall.newSelectCount += 1;
+				endpos = 1;
+				document.writeln('<center><br><FONT FACE="Arial" SIZE="-1"><b>' + t_idall.LayerName[b] + '</b><br>');
+				document.writeln('<table border="1" size="95%" cellspacing="0" cellpadding="2" nowrap bgcolor="' + t_idall.tableBackColor + '">');						
+				for (var i=0;i<fCount;i++) {
+		
+					inData = t_idall.parseRecordString(theReply, endpos);
+					endpos = t_idall.xmlEndPos;
+					//selectedData = clearLeadingSpace(inData);
+					selectedData = inData;
+					
+					epos = theReply.indexOf("</FEATURE",endpos);
+					//if (showSelectedData) {
+						//alert("2\n" + selectedData);
+						var showHyper = false;
+						if (t_idall.hyperLinkLayers!=null) {
+							for (var s1=0;s1<t_idall.hyperLinkLayers.length;s1++) {
+								if (t_idall.hyperLinkLayers[s1] == t_idall.LayerName[b]) showHyper=true;
+							}
+						}
+							
+						var fName1 = t_idall.getFieldNames(selectedData);
+						var fValue1 = t_idall.getFieldValues(selectedData);
+						//selectPoints[selectCount] = getIdValue(fName1, fValue1);
+						var idFieldNum = -1;
+						var shapeFieldNum = -1;
+						if (t_idall.hideIDFieldData) {
+							// hide ID column header
+							for (var f=0;f<fName1.length;f++) {
+								if (fName1[f]==t_idall.LayerIDField[t_idall.ActiveLayerIndex]) idFieldNum = f;
+							}
+						}
+						if (t_idall.hideShapeFieldData) {
+							// hide Shape column header
+							for (var f=0;f<fName1.length;f++) {
+								if (fName1[f]==t_idall.LayerShapeField[t_idall.ActiveLayerIndex]) shapeFieldNum = f;
+							}
+						}
+						if (t_idall.selectCount==0) {
+							document.write('<tr><th><FONT FACE="Arial" SIZE="-2">Rec</FONT></a></th>');
+							for (var f=0;f<fName1.length;f++) {
+								if ((f!=idFieldNum) && (f!=shapeFieldNum)) {
+									var f2 = -1;
+									if (t_idall.useFieldAlias) {
+										for (var f3=0;f3<t_idall.AliasFieldName.length;f3++) {
+											if (t_idall.AliasFieldName[f3]==fName1[f]) f2 = f3;
+										}
+									}
+									if (f2!=-1) {
+										document.write('<th><FONT FACE="Arial" SIZE="-2">' + t_idall.AliasFieldAlias[f2] + '</FONT></a></th>');
+									} else {
+										document.write('<th><FONT FACE="Arial" SIZE="-2">' + fName1[f] + '</FONT></a></th>');
+									}
+								}
+							}
+							document.writeln('</tr>');
+						}
+						document.write('<tr><td>');
+						document.write('<FONT FACE="Arial" SIZE="-2">' + (t_idall.selectCount+t_idall.queryStartRecord) + '</FONT>');
+						document.writeln('</td>');
+						for (var f=0;f<fName1.length;f++) {	
+							if ((f!=idFieldNum) && (f!=shapeFieldNum)) {
+								document.write('<TD>');
+								var isHyper=false;
+								if (showHyper) { 
+									for (var s1=0;s1<t_idall.hyperLinkFields.length;s1++) {
+										if (t_idall.hyperLinkFields[s1]==fName1[f]) {
+											var theLinkURL = t_idall.hyperLinkPrefix[s1] + fValue1[f] + t_idall.hyperLinkSuffix[s1];
+											document.write('<a href="' + theLinkURL + '" target="_blank">');
+											isHyper=true;
+										}
+									}
+								}
+								var s2 = -1;
+								for (var s1=0;s1<t_idall.LayerFields.length;s1++) {
+									if (fName1[f]==t_idall.LayerFields[s1]) s2=s1;
+								}
+								if (t_idall.LayerFieldType[s2]=="91") {
+									//alert(fName1[f]);
+									if (isNaN(fValue1[f])) {
+										var theDate = fValue1[f];
+									} else {
+										//var theDate = new Date(parseInt(fValue1[f]));
+										var theDateObj = new Date(parseFloat(fValue1[f]));
+										var d = theDateObj.toUTCString();
+										var theDate = d.replace(/GMT|UTC/,"");
+									}
+									document.write('<FONT FACE="Arial" SIZE="-2">' + theDate + '</FONT>');
+									theDate=null;
+								} else {
+									// put html entity for spaces so display is correct - browsers trim extra spaces
+									tempString = fValue1[f].replace(/ /g, "&nbsp;");
+									// replace &apos; with \'
+									tempString = tempString.replace(/&apos;/g, "\'");
+									document.write('<FONT FACE="Arial" SIZE="-2">' + tempString + '</FONT>');
+									//document.write('<FONT FACE="Arial" SIZE="-2">' + fValue1[f] + '</FONT>');
+								}
+								if (isHyper) document.write('</a>');
+								document.writeln('</td>');
+							}
+						}
+						document.writeln('</tr>');
+						fName1 = null;
+						fValue1 = null;
+					//}
+					t_idall.selectCount += 1;
+					//					
+				}
+				document.writeln('</table></center>');
+				lyrCount++
+
+			} else {
+				if (t_idall.listAllLayersInIDAll) {
+		        	document.writeln('<center><FONT FACE="Arial" SIZE="-1"><b>' + t_idall.LayerName[b] + '</b>');
+					document.writeln('<br>' + t_idall.msgList[64] + '<br><br></font></center>');
+		     	}
+
+			}
+	  	}
+	  }//end for 
+	  
+	  if (lyrCount==0) {
+        	document.writeln('<center><FONT FACE="Arial" SIZE="-1"><b>' + t_idall.msgList[112] + '</b></font></center>');
+	  }
+ 
+    document.writeln('</body>');
+    document.close();
+    t_idall.hideRetrieveData();
+	t_idall.selectCount = 0;
+</script>
+</html>

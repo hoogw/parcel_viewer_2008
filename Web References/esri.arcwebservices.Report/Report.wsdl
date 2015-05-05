@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:s1="http://www.themindelectric.com/package/com.esri.is.services.common.v2/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s0="http://www.themindelectric.com/package/java.lang/" xmlns:s3="http://www.themindelectric.com/package/com.esri.is.services.common.v2.geom/" xmlns:s2="http://www.themindelectric.com/package/com.esri.is.services.glue.v2.report/" xmlns:s4="http://www.themindelectric.com/package/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns="v2" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" targetNamespace="v2" name="Report" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/java.lang/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOfstring">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="xsd:string[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </s:schema>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/com.esri.is.services.common.v2/">
+      <xsd:import namespace="http://www.themindelectric.com/package/java.lang/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="FieldDesc">
+        <xsd:sequence>
+          <xsd:element name="fieldName" nillable="true" type="xsd:string" />
+          <xsd:element name="fieldType" nillable="true" type="xsd:string" />
+          <xsd:element name="fieldShortDesc" nillable="true" type="xsd:string" />
+          <xsd:element name="fieldLength" type="xsd:int" />
+          <xsd:element name="fieldPrecision" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfFieldDesc">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s1:FieldDesc[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="KeyValue">
+        <xsd:sequence>
+          <xsd:element name="key" nillable="true" type="xsd:string" />
+          <xsd:element name="value" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfKeyValue">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s1:KeyValue[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ResultSet">
+        <xsd:sequence>
+          <xsd:element name="totalCount" type="xsd:int" />
+          <xsd:element name="fields" nillable="true" type="s1:ArrayOfFieldDesc" />
+          <xsd:element name="rows" nillable="true" type="s1:ArrayOfRowData" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="RowData">
+        <xsd:sequence>
+          <xsd:element name="fieldValues" nillable="true" type="s0:ArrayOfstring" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfRowData">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s1:RowData[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ResultSetRange">
+        <xsd:sequence>
+          <xsd:element name="startIndex" type="xsd:int" />
+          <xsd:element name="count" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </s:schema>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/com.esri.is.services.glue.v2.report/">
+      <xsd:import namespace="http://www.themindelectric.com/package/" />
+      <xsd:import namespace="http://www.themindelectric.com/package/com.esri.is.services.common.v2.geom/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://www.themindelectric.com/package/java.lang/" />
+      <xsd:import namespace="http://www.themindelectric.com/package/com.esri.is.services.common.v2/" />
+      <xsd:complexType name="ReportOptions">
+        <xsd:sequence>
+          <xsd:element name="dataSource" nillable="true" type="xsd:string" />
+          <xsd:element name="reportFormat" nillable="true" type="xsd:string" />
+          <xsd:element name="reportHeader" nillable="true" type="s1:ArrayOfKeyValue" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="GeographyIdOptions">
+        <xsd:sequence>
+          <xsd:element name="keyword" nillable="true" type="xsd:string" />
+          <xsd:element name="outputGeographyLevel" nillable="true" type="xsd:string" />
+          <xsd:element name="geographyIdFilter" nillable="true" type="xsd:string" />
+          <xsd:element name="resultSetRange" nillable="true" type="s1:ResultSetRange" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ReportInfo">
+        <xsd:sequence>
+          <xsd:element name="dataSource" nillable="true" type="xsd:string" />
+          <xsd:element name="reportUrl" nillable="true" type="xsd:string" />
+          <xsd:element name="reportFormat" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="StandardGeography">
+        <xsd:sequence>
+          <xsd:element name="geographyLevel" nillable="true" type="xsd:string" />
+          <xsd:element name="geographyIds" nillable="true" type="s0:ArrayOfstring" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfStandardGeography">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s2:StandardGeography[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ThematicVariableInfo">
+        <xsd:sequence>
+          <xsd:element name="database" nillable="true" type="xsd:string" />
+          <xsd:element name="table" nillable="true" type="xsd:string" />
+          <xsd:element name="variable" nillable="true" type="xsd:string" />
+          <xsd:element name="shortDesc" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfThematicVariableInfo">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s2:ThematicVariableInfo[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Site">
+        <xsd:sequence>
+          <xsd:element name="siteLocation" nillable="true" type="s3:Point" />
+          <xsd:element name="siteName" nillable="true" type="xsd:string" />
+          <xsd:element name="ringRadii" nillable="true" type="s4:ArrayOfdouble" />
+          <xsd:element name="calcType" nillable="true" type="xsd:string" />
+          <xsd:element name="ringUnits" nillable="true" type="xsd:string" />
+          <xsd:element name="polygons" nillable="true" type="s3:ArrayOfGeometry" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfSite">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s2:Site[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ThematicReportOptions">
+        <xsd:sequence>
+          <xsd:element name="classificationMethod" nillable="true" type="xsd:string" />
+          <xsd:element name="geographyLevel" nillable="true" type="xsd:string" />
+          <xsd:element name="numberOfClasses" type="xsd:int" />
+          <xsd:element name="colorPalette" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfReportInfo">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s2:ReportInfo[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfReportOptions">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s2:ReportOptions[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </s:schema>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/com.esri.is.services.common.v2.geom/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://www.themindelectric.com/package/" />
+      <xsd:complexType name="Point">
+        <xsd:sequence>
+          <xsd:element name="x" type="xsd:double" />
+          <xsd:element name="y" type="xsd:double" />
+          <xsd:element name="coordinateSystem" nillable="true" type="s3:CoordinateSystem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Geometry">
+        <xsd:sequence>
+          <xsd:element name="points" nillable="true" type="s3:ArrayOfSimplePoint" />
+          <xsd:element name="parts" nillable="true" type="s4:ArrayOfint" />
+          <xsd:element name="type" type="xsd:int" />
+          <xsd:element name="coordinateSystem" nillable="true" type="s3:CoordinateSystem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfGeometry">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s3:Geometry[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="CoordinateSystem">
+        <xsd:sequence>
+          <xsd:element name="projection" nillable="true" type="xsd:string" />
+          <xsd:element name="datumTransformation" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SimplePoint">
+        <xsd:sequence>
+          <xsd:element name="x" type="xsd:double" />
+          <xsd:element name="y" type="xsd:double" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfSimplePoint">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="s3:SimplePoint[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </s:schema>
+    <s:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.themindelectric.com/package/">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:complexType name="ArrayOfdouble">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="xsd:double[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfint">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute d7p1:arrayType="xsd:int[]" ref="soapenc:arrayType" xmlns:d7p1="http://schemas.xmlsoap.org/wsdl/" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </s:schema>
+  </types>
+  <message name="getVersion0In" />
+  <message name="getVersion0Out">
+    <part name="Result" type="s:string" />
+  </message>
+  <message name="getTables1In">
+    <part name="database" type="s:string" />
+  </message>
+  <message name="getTables1Out">
+    <part name="Result" type="s0:ArrayOfstring" />
+  </message>
+  <message name="getAvailableFieldNames2In">
+    <part name="reportOptions" type="s2:ReportOptions" />
+  </message>
+  <message name="getAvailableFieldNames2Out">
+    <part name="Result" type="s1:ArrayOfFieldDesc" />
+  </message>
+  <message name="getDatabases3In" />
+  <message name="getDatabases3Out">
+    <part name="Result" type="s0:ArrayOfstring" />
+  </message>
+  <message name="getGeographyIds4In">
+    <part name="geographyIdOptions" type="s2:GeographyIdOptions" />
+  </message>
+  <message name="getGeographyIds4Out">
+    <part name="Result" type="s1:ResultSet" />
+  </message>
+  <message name="getStandardGeographyReport5In">
+    <part name="standardGeographies" type="s2:ArrayOfStandardGeography" />
+    <part name="reportOptions" type="s2:ReportOptions" />
+    <part name="token" type="s:string" />
+  </message>
+  <message name="getStandardGeographyReport5Out">
+    <part name="Result" type="s2:ReportInfo" />
+  </message>
+  <message name="getReportHeaderKeys6In">
+    <part name="methodName" type="s:string" />
+  </message>
+  <message name="getReportHeaderKeys6Out">
+    <part name="Result" type="s1:ArrayOfKeyValue" />
+  </message>
+  <message name="getThematicVariables7In">
+    <part name="database" type="s:string" />
+    <part name="table" type="s:string" />
+  </message>
+  <message name="getThematicVariables7Out">
+    <part name="Result" type="s2:ArrayOfThematicVariableInfo" />
+  </message>
+  <message name="searchThematicVariables8In">
+    <part name="keyword" type="s:string" />
+  </message>
+  <message name="searchThematicVariables8Out">
+    <part name="Result" type="s2:ArrayOfThematicVariableInfo" />
+  </message>
+  <message name="getMapReport9In">
+    <part name="sites" type="s2:ArrayOfSite" />
+    <part name="reportOptions" type="s2:ReportOptions" />
+    <part name="token" type="s:string" />
+  </message>
+  <message name="getMapReport9Out">
+    <part name="Result" type="s2:ReportInfo" />
+  </message>
+  <message name="getThematicMapReport10In">
+    <part name="sites" type="s2:ArrayOfSite" />
+    <part name="reportOptions" type="s2:ReportOptions" />
+    <part name="thematicReportOptions" type="s2:ThematicReportOptions" />
+    <part name="thematicVariable" type="s:string" />
+    <part name="token" type="s:string" />
+  </message>
+  <message name="getThematicMapReport10Out">
+    <part name="Result" type="s2:ReportInfo" />
+  </message>
+  <message name="getSiteReports11In">
+    <part name="site" type="s2:Site" />
+    <part name="reportOptions" type="s2:ArrayOfReportOptions" />
+    <part name="combineReports" type="s:boolean" />
+    <part name="token" type="s:string" />
+  </message>
+  <message name="getSiteReports11Out">
+    <part name="Result" type="s2:ArrayOfReportInfo" />
+  </message>
+  <portType name="IReport">
+    <operation name="getVersion">
+      <input name="getVersion0In" message="tns:getVersion0In" />
+      <output name="getVersion0Out" message="tns:getVersion0Out" />
+    </operation>
+    <operation name="getTables" parameterOrder="database">
+      <documentation>Returns a list of variable tables for a specified database. </documentation>
+      <input name="getTables1In" message="tns:getTables1In" />
+      <output name="getTables1Out" message="tns:getTables1Out" />
+    </operation>
+    <operation name="getAvailableFieldNames" parameterOrder="reportOptions">
+      <documentation>Returns information about available fields for a specific data source. </documentation>
+      <input name="getAvailableFieldNames2In" message="tns:getAvailableFieldNames2In" />
+      <output name="getAvailableFieldNames2Out" message="tns:getAvailableFieldNames2Out" />
+    </operation>
+    <operation name="getDatabases">
+      <documentation>Returns a list of databases that can be used to create a thematic map report. </documentation>
+      <input name="getDatabases3In" message="tns:getDatabases3In" />
+      <output name="getDatabases3Out" message="tns:getDatabases3Out" />
+    </operation>
+    <operation name="getGeographyIds" parameterOrder="geographyIdOptions">
+      <documentation>Returns geography ID information. </documentation>
+      <input name="getGeographyIds4In" message="tns:getGeographyIds4In" />
+      <output name="getGeographyIds4Out" message="tns:getGeographyIds4Out" />
+    </operation>
+    <operation name="getStandardGeographyReport" parameterOrder="standardGeographies reportOptions token">
+      <documentation>Returns a pre-formatted report for a specified standard geography. </documentation>
+      <input name="getStandardGeographyReport5In" message="tns:getStandardGeographyReport5In" />
+      <output name="getStandardGeographyReport5Out" message="tns:getStandardGeographyReport5Out" />
+    </operation>
+    <operation name="getReportHeaderKeys" parameterOrder="methodName">
+      <documentation>Returns the key/value pairs for the header of the report. </documentation>
+      <input name="getReportHeaderKeys6In" message="tns:getReportHeaderKeys6In" />
+      <output name="getReportHeaderKeys6Out" message="tns:getReportHeaderKeys6Out" />
+    </operation>
+    <operation name="getThematicVariables" parameterOrder="database table">
+      <documentation>Returns a thematic map in PDF format for a specified array of sites. </documentation>
+      <input name="getThematicVariables7In" message="tns:getThematicVariables7In" />
+      <output name="getThematicVariables7Out" message="tns:getThematicVariables7Out" />
+    </operation>
+    <operation name="searchThematicVariables" parameterOrder="keyword">
+      <documentation>Returns a list of variables for a specified database. </documentation>
+      <input name="searchThematicVariables8In" message="tns:searchThematicVariables8In" />
+      <output name="searchThematicVariables8Out" message="tns:searchThematicVariables8Out" />
+    </operation>
+    <operation name="getMapReport" parameterOrder="sites reportOptions token">
+      <documentation>Returns a map report in PDF format for a specified array of sites. </documentation>
+      <input name="getMapReport9In" message="tns:getMapReport9In" />
+      <output name="getMapReport9Out" message="tns:getMapReport9Out" />
+    </operation>
+    <operation name="getThematicMapReport" parameterOrder="sites reportOptions thematicReportOptions thematicVariable token">
+      <documentation>Returns a thematic map in PDF format for a specified array of sites. </documentation>
+      <input name="getThematicMapReport10In" message="tns:getThematicMapReport10In" />
+      <output name="getThematicMapReport10Out" message="tns:getThematicMapReport10Out" />
+    </operation>
+    <operation name="getSiteReports" parameterOrder="site reportOptions combineReports token">
+      <documentation>Returns pre-formatted reports for a specified trade area. </documentation>
+      <input name="getSiteReports11In" message="tns:getSiteReports11In" />
+      <output name="getSiteReports11Out" message="tns:getSiteReports11Out" />
+    </operation>
+  </portType>
+  <binding name="IReport" type="tns:IReport">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getVersion">
+      <soap:operation soapAction="getVersion" style="rpc" />
+      <input name="getVersion0In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getVersion0Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getTables">
+      <soap:operation soapAction="getTables" style="rpc" />
+      <input name="getTables1In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getTables1Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getAvailableFieldNames">
+      <soap:operation soapAction="getAvailableFieldNames" style="rpc" />
+      <input name="getAvailableFieldNames2In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getAvailableFieldNames2Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getDatabases">
+      <soap:operation soapAction="getDatabases" style="rpc" />
+      <input name="getDatabases3In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getDatabases3Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getGeographyIds">
+      <soap:operation soapAction="getGeographyIds" style="rpc" />
+      <input name="getGeographyIds4In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getGeographyIds4Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getStandardGeographyReport">
+      <soap:operation soapAction="getStandardGeographyReport" style="rpc" />
+      <input name="getStandardGeographyReport5In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getStandardGeographyReport5Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getReportHeaderKeys">
+      <soap:operation soapAction="getReportHeaderKeys" style="rpc" />
+      <input name="getReportHeaderKeys6In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getReportHeaderKeys6Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getThematicVariables">
+      <soap:operation soapAction="getThematicVariables" style="rpc" />
+      <input name="getThematicVariables7In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getThematicVariables7Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="searchThematicVariables">
+      <soap:operation soapAction="searchThematicVariables" style="rpc" />
+      <input name="searchThematicVariables8In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="searchThematicVariables8Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getMapReport">
+      <soap:operation soapAction="getMapReport" style="rpc" />
+      <input name="getMapReport9In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getMapReport9Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getThematicMapReport">
+      <soap:operation soapAction="getThematicMapReport" style="rpc" />
+      <input name="getThematicMapReport10In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getThematicMapReport10Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getSiteReports">
+      <soap:operation soapAction="getSiteReports" style="rpc" />
+      <input name="getSiteReports11In">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getSiteReports11Out">
+        <soap:body use="encoded" namespace="v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Report">
+    <documentation>The Report Web Service enables users to create a report or a map for a specified location in the United States. The ArcWeb Service is intended to support application developers who would like to provide detailed reports in PDF, Excel, and XML format and maps in presentation-quality PDF format. The Report Web Service provides access to data sources from leading data publishers.</documentation>
+    <port name="IReport" binding="tns:IReport">
+      <soap:address location="http://arcweb.esri.com/services/v2/Report" />
+    </port>
+  </service>
+</definitions>

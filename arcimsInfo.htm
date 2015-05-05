@@ -1,0 +1,58 @@
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<html>
+<head>
+	<title>Untitled</title>
+	<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
+		function toggleDebug() {
+			var t;
+			if (opener) {
+				if (opener.name=="MapFrame") {
+					t = opener.parent.MapFrame;
+				} else {
+					t = opener;
+				}
+			} else {
+				
+				if (parent.MapFrame!=null) {
+					t = parent.MapFrame;
+				} else {
+					t=document;
+				}
+			}
+		
+			if (t.setDebug) {
+				//alert(t.debugOn);
+				if (t.debugOn==0) {
+					t.debugOn=3;
+					alert(t.msgList[120]);
+				} else {
+					t.debugOn=0;
+					alert(t.msgList[121]);
+				}
+			}
+		}
+		
+	</SCRIPT>
+</head>
+
+<body BGCOLOR="White" TEXT="Black" LEFTMARGIN=0 TOPMARGIN=0>
+<TABLE CELLSPACING="0" CELLPADDING="0"><TR>
+<TD ALIGN="left" VALIGN="top">
+<IMG SRC="images/pixel.gif" WIDTH=10 HEIGHT=50 HSPACE=0 VSPACE=0 BORDER=0 ALT="" onmousedown="toggleDebug()" ALIGN="TOP">
+<IMG SRC="images/arcimslogo.gif" WIDTH=81 HEIGHT=90 HSPACE=0 VSPACE=0 BORDER=0 ALT="" ALIGN="TOP">
+<IMG SRC="images/pixel.gif" WIDTH=10 HEIGHT=20 HSPACE=0 VSPACE=0 BORDER=0 ALT="" ALIGN="TOP">
+</TD>
+<TD>
+<FONT FACE="Arial,sans-serif" SIZE="+1">
+This site is powered by ESRI's ArcIMS Internet technology.
+</FONT>
+<BR>
+<FONT FACE="Arial,sans-serif" SIZE="-2">
+Copyright (C) 1992-2001 Environmental Systems Research Institute, Inc.
+</FONT>
+
+</TD>
+</TR></TABLE>
+</body>
+</html>

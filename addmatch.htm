@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<HTML>
+<HEAD>
+	
+	<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
+		var t;
+		if (opener) {
+			if (opener.name=="MapFrame") {
+				t = opener.parent.MapFrame;
+			} else {
+				t = opener;
+			}
+		} else {
+			
+			if (parent.MapFrame) {
+				t = parent.MapFrame;
+			} else {
+				t=document;
+			}
+		}
+		document.writeln('<TITLE>' + t.titleList[11] + '</TITLE>');
+		function setGCActiveLayer() {
+			var theForm = document.forms[0];
+			var theIndex = theForm.theLayer.selectedIndex;
+			t.GCActiveLayer = theIndex;
+			//t.GCActiveLayer = theForm.theLayer.options[theIndex].value;
+			//alert(theIndex);
+			t.setupGeocode();
+			//document.location = "addmatch.htm";
+		}
+		
+		function sendQuery() {
+			var theForm = document.forms[0];
+			if (t.GCidCount>1) {
+				for (var i=0;i<theForm.idField.length;i++) {
+					t.GCvalue[i] = theForm.idField[i].value;
+				}
+			} else {
+				t.GCvalue[0] = theForm.idField.value;
+			}
+			var theText = t.writeGeocodeXML();
+			t.sendToServer(t.imsGeocodeURL,theText,27);
+				
+				//if (opener) {
+				//	window.close();
+				//} else {
+				//	document.location = "text.htm";
+				//}
+				//t=null;
+		}
+	</SCRIPT>
+</HEAD>
+
+<BODY BGCOLOR="Black" TEXT="White" LEFTMARGIN=0 TOPMARGIN=0 RIGHTMARGIN=0 onload="window.focus()">
+<FORM onsubmit="sendQuery(); return false;">
+<TABLE WIDTH="100%" CELLSPACING="2">
+	<TR>
+		<TD BGCOLOR="Silver">
+			<SCRIPT TYPE="text/javascript" LANGUAGE="JavaScript">
+				var t;
+				if (opener) {
+					if (opener.name=="MapFrame") {
+						t = opener.parent.MapFrame;
+					} else {
+						t = opener;
+					}
+				} else {
+					
+					if (parent.MapFrame) {
+						t = parent.MapFrame;
+					} else {
+						t=document;
+					}
+				}
+				document.writeln('<FONT FACE="Arial" SIZE="-1" COLOR="Black">' + t.msgList[88] + '</FONT>');
+				document.writeln('<SELECT NAME="theLayer">');
+				for (var i=0;i<t.GCLayerCount;i++) {
+					document.write('<option value="' + t.GCLayers[i] + '"');
+					//if (t.GCLayers[i]==t.GCActiveLayer) document.write(' selected');
+					if (i==t.GCActiveLayer) document.write(' selected');
+					document.writeln('>' + t.GCLayers[i]);
+				}
+			
+			document.writeln('</select>');
+			if (t.GCLayerCount>1) document.writeln('&nbsp;<input type="button" onclick="setGCActiveLayer()" value="' + t.buttonList[12] + '">');
+			
+			document.writeln('</TD>');
+			document.writeln('<TD BGCOLOR="Silver" ALIGN="CENTER"><INPUT TYPE="Button" NAME="theButton" VALUE="' + t.buttonList[13] + '" onclick="sendQuery()"></TD>');
+		document.writeln('</TR>');
+		for (var i=0;i<t.GCidCount;i++) {
+			document.writeln('<tr>');
+			document.writeln('	<td bgcolor="Silver">');
+			document.writeln('		<font face="Arial" size="-1" color="Black">' + t.GClabel[i] + ':</font><br>');
+			document.writeln('		<font face="Arial" size="-2" color="Black">' + t.GCdesc[i] + '</font>');
+			document.writeln('	</td>');
+			document.writeln('	<td bgcolor="Silver"><input type="Text" name="idField">');
+			document.writeln('	</td>');
+			document.writeln('</tr>');
+		}
+	</SCRIPT>
+	
+</TABLE>
+</FORM>
+</BODY>
+</HTML>

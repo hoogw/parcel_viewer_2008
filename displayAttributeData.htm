@@ -1,0 +1,242 @@
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<html>
+<HEAD>
+<script language="javascript">
+	var t;
+	var t2 = "";
+	if (opener) {
+		t = opener.parent.MapFrame;
+		t2 = "opener.parent.MapFrame";
+	} else {
+		t = parent.MapFrame;
+		t2 = "parent.MapFrame";
+	}
+	var theReply = t.lastXMLResponse;
+	var theError = t.getXMLErrorMessage(theReply);
+	var fList="";
+	var lpos1 = 1;
+	var lpos2 = 1;
+	var epos = 1;
+	var spos = 1;
+	var morePoints=true;
+	var moreFeatures=true;
+	var featureCount = t.justGetFeatureCount(theReply);
+	//alert(featureCount);
+	var pos = 0;
+	var startpos = 0;
+	var endpos = t.xmlEndPos;
+	var stillMore = false
+	pos = theReply.indexOf('hasmore="true"',endpos);
+	if (pos!=-1) stillMore = true;
+	pos=0;
+	var tempCount = 0;
+	var selectedData="";
+	var inData="";
+	var xStr="";
+	var yStr="";
+	var tempString = "";
+	var fCount = featureCount;
+	//alert("displayAttributeData()[featurecount=" + featureCount + "]");
+	t.selectCount = 0;
+	var tempString="";
+	var theFrame = t2;
+	if (featureCount > 0) {
+		t.newSelectCount += 1;
+
+			document.writeln('<title>' + t.titleList[7] + '</title></head>');
+			document.writeln('<body bgcolor="' + t.textFrameBackColor + '" text="Black" link="Blue" vlink="Gray" LEFTMARGIN=0 onload="window.focus()">');
+			document.writeln('<center>');
+			document.writeln('<FONT FACE="Arial" SIZE="-1"><b>' + t.LayerName[t.ActiveLayerIndex] + '</b></FONT>');
+			document.writeln('<table border="1" cellspacing="0" cellpadding="2" nowrap bgcolor="' + t.tableBackColor + '">');
+
+		endpos = 1;
+		
+		for (var i=0;i<fCount;i++) {
+			//alert(endpos);
+			if (t.toolMode!=4) {
+				var theXYs = t.getEnvelopeXYs(theReply, endpos)
+				t.selectLeft[t.selectCount] = theXYs[0];
+				t.selectBottom[t.selectCount] = theXYs[1];
+				t.selectRight[t.selectCount] = theXYs[2];
+				t.selectTop[t.selectCount] = theXYs[3];
+				endpos = t.xmlEndPos;
+			}
+			//alert(endpos);
+			inData = t.parseRecordString(theReply, endpos);
+			endpos = t.xmlEndPos;
+			//selectedData = clearLeadingSpace(inData);
+			selectedData = inData;
+			
+			epos = theReply.indexOf("</FEATURE",endpos);
+			//if (showSelectedData) {
+				//alert("2\n" + selectedData);
+				var showHyper = false;
+				if (t.hyperLinkLayers!=null) {
+					for (var s1=0;s1<t.hyperLinkLayers.length;s1++) {
+						if (t.hyperLinkLayers[s1] == t.LayerName[t.ActiveLayerIndex]) showHyper=true;
+					}
+				}
+					
+				var fName1 = t.getFieldNames(selectedData);
+				var fValue1 = t.getFieldValues(selectedData);
+				t.selectPoints[t.selectCount] = t.getIdValue(fName1, fValue1);
+				
+				var idFieldNum = -1;
+				var shapeFieldNum = -1;
+				if (t.hideIDFieldData) {
+					// hide ID column header
+					for (var f=0;f<fName1.length;f++) {
+						if (fName1[f]==t.LayerIDField[t.ActiveLayerIndex]) idFieldNum = f;
+					}
+				}
+				if (t.hideShapeFieldData) {
+					// hide Shape column header
+					for (var f=0;f<fName1.length;f++) {
+						if (fName1[f]==t.LayerShapeField[t.ActiveLayerIndex]) shapeFieldNum = f;
+					}
+				}
+				
+				if (t.selectCount==0) {
+					document.write('<tr><th><FONT FACE="Arial" SIZE="-2">' + t.msgList[86] + '</FONT></a></th>');
+					for (var f=0;f<fName1.length;f++) {
+						if ((f!=idFieldNum) && (f!=shapeFieldNum)) {
+							var f2 = -1;
+							if (t.useFieldAlias) {
+								for (var f3=0;f3<t.AliasFieldName.length;f3++) {
+									if (t.AliasFieldName[f3]==fName1[f]) f2 = f3;
+								}
+							}
+							if (f2!=-1) {
+								document.write('<th><FONT FACE="Arial" SIZE="-2">' + t.AliasFieldAlias[f2] + '</FONT></a></th>');
+							} else {
+								document.write('<th><FONT FACE="Arial" SIZE="-2">' + fName1[f] + '</FONT></a></th>');
+							}
+						}
+					}
+					document.writeln('</tr>');
+				}
+				document.write('<tr><td>');
+				if (t.toolMode!=4) document.write('<a href="javascript:' + t2 + '.showHighlight(' + t.selectCount + ')">');
+				document.write('<FONT FACE="Arial" SIZE="-2">' + (t.selectCount+t.queryStartRecord) + '</FONT>');
+				if (t.toolMode!=4) document.write('</a>');
+				document.writeln('</td>');
+				for (var f=0;f<fName1.length;f++) {	
+					if ((f!=idFieldNum) && (f!=shapeFieldNum)) {
+						document.write('<TD>');
+						var isHyper=false;
+						if (showHyper) {
+							for (var s1=0;s1<t.hyperLinkFields.length;s1++) {
+								if (t.hyperLinkFields[s1]==fName1[f]) {
+									var theLinkURL = t.hyperLinkPrefix[s1] + fValue1[f] + t.hyperLinkSuffix[s1];
+									document.write('<a href="' + theLinkURL + '" target="_blank">');
+									isHyper=true;
+								} 
+							}
+						}
+						var s2 = -1;
+						for (var s1=0;s1<t.LayerFields.length;s1++) {
+							if (fName1[f]==t.LayerFields[s1]) s2=s1;
+						}
+						if (t.LayerFieldType[s2]=="91") {
+							//alert(fName1[f]);
+							if (isNaN(fValue1[f])) {
+								var theDate = fValue1[f];
+							} else {
+								//var theDate = new Date(parseInt(fValue1[f]));
+								var theDateObj = new Date(parseFloat(fValue1[f]));
+								var d = theDateObj.toUTCString();
+								var theDate = d.replace(/GMT|UTC/,"");
+							}
+							document.write('<FONT FACE="Arial" SIZE="-2">' + theDate + '</FONT>');
+							theDate=null;
+						} else {
+							// put html entity for spaces so display is correct - browsers trim extra spaces
+							tempString = fValue1[f].replace(/ /g, "&nbsp;");
+							document.write('<FONT FACE="Arial" SIZE="-2">' + tempString + '</FONT>');
+							//document.write('<FONT FACE="Arial" SIZE="-2">' + fValue1[f] + '</FONT>');
+						}
+						if (isHyper) document.write('</a>');
+						document.writeln('</td>');
+					}
+				}
+				document.writeln('</tr>');
+				fName1 = null;
+				fValue1 = null;
+				
+			//}
+			t.selectCount += 1;
+					
+		}
+		//if (showSelectedData) {
+			
+			document.writeln('</table><FONT FACE="Arial" SIZE="-2">');
+			if (t.toolMode!=25) {
+				if (t.queryStartRecord>1) {
+					var prevRecord = t.queryStartRecord - t.maxFeaturesReturned;
+					if (prevRecord<1) prevRecord=1;
+					document.write('<a href="javascript:' + t2 + '.getMoreData(' + prevRecord + ')">' + t.msgList[61] + t.maxFeaturesReturned + t.msgList[62] + '</a>&nbsp;&nbsp;&nbsp;');
+				}
+				if (stillMore) {
+					var nextRecord=featureCount + t.queryStartRecord;
+					document.writeln('<a href="javascript:' + t2 + '.getMoreData(' + nextRecord + ')">' + t.msgList[63] + '</a>');
+				}
+			}
+			if ((t.toolMode!=4) && (t.toolMode!=25) && (t.selectCount>1)) {
+				document.writeln('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><a href="javascript:' + t2 + '.zoomToReturnedRecords()">Zoom to these records</A></b>');
+			}
+
+			document.writeln('</font></center></body>');
+		//}
+		//alert("toolMode:" + toolMode);
+		
+		if ((t.queryStartRecord==1) && (t.toolMode!=4) && (t.toolMode!=25)) {
+			if ((t.selectCount==1) && (t.zoomToSingleSelect)) {
+				var fWidth = t.selectRight[0] - t.selectLeft[0];
+				var fHeight = t.selectTop[0] - t.selectBottom[0];
+				var mWMargin = 0;
+				var mHMargin = 0;
+				if (t.selectType=="point") {			
+					mWMargin = t.fullWidth * t.selectPointMargin;
+					mHMargin = t.fullHeight * t.selectPointMargin;
+					if (mWMargin > t.xDistance/2) {
+						mWMargin = t.xDistance/2;
+						mHMargin = t.yDistance/2;
+					}
+				} else {
+					mWMargin = fWidth * t.selectMargin;
+					mHMargin = fHeight * t.selectMargin; 
+				}
+				t.saveLastExtent();
+				t.eLeft = t.selectLeft[0] - mWMargin;
+				t.eRight = t.selectRight[0] + mWMargin;
+				t.eTop = t.selectTop[0] + mHMargin;
+				t.eBottom = t.selectBottom[0] - mHMargin;
+			}
+			t.sendMapXML();
+		}
+		
+		
+			
+	} else {
+		document.writeln('	<title>' + t.titleList[8] + '</title>');
+		document.writeln('</head>');
+		document.writeln('<body BGCOLOR="White" TEXT="Black" LEFTMARGIN=0 TOPMARGIN=0>');
+		document.writeln('<FONT FACE="Arial"><B>' + t.LayerName[t.ActiveLayerIndex] +'</B></font><FONT FACE="Arial" size="-2">');
+		document.writeln('<br>' + t.msgList[64]);
+		if (t.debugOn>0) {
+			document.writeln('<p>' + t.msgList[65] + '<br>');
+			document.writeln(untag(theReply));
+		} else {
+			if (theError!="") {
+				document.writeln('<p>' + t.msgList[66] + '<br>');
+				document.writeln(theError);
+			}
+		}
+		document.writeln('</FONT>');
+		document.writeln('</body>');
+	}
+	if (t.toolMode==4) t.selectCount=0;
+	t.hideRetrieveData();
+</script>
+</html>

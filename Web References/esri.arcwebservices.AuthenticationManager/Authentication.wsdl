@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://arcweb.esri.com/v2" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://arcweb.esri.com/v2" name="Authentication" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types />
+  <message name="getVersion0In" />
+  <message name="getVersion0Out">
+    <part name="Result" type="s:string" />
+  </message>
+  <message name="getToken1In">
+    <part name="username" type="s:string" />
+    <part name="password" type="s:string" />
+  </message>
+  <message name="getToken1Out">
+    <part name="Result" type="s:string" />
+  </message>
+  <message name="getToken2In">
+    <part name="username" type="s:string" />
+    <part name="password" type="s:string" />
+    <part name="expiration" type="s:int" />
+  </message>
+  <message name="getToken2Out">
+    <part name="Result" type="s:string" />
+  </message>
+  <message name="validateToken3In">
+    <part name="token" type="s:string" />
+  </message>
+  <message name="validateToken3Out">
+    <part name="Result" type="s:int" />
+  </message>
+  <portType name="IAuthentication">
+    <operation name="getVersion">
+      <input name="getVersion0In" message="tns:getVersion0In" />
+      <output name="getVersion0Out" message="tns:getVersion0Out" />
+    </operation>
+    <operation name="getToken" parameterOrder="username password">
+      <documentation>Returns a token for the given username/password combination. </documentation>
+      <input name="getToken1In" message="tns:getToken1In" />
+      <output name="getToken1Out" message="tns:getToken1Out" />
+    </operation>
+    <operation name="getToken" parameterOrder="username password expiration">
+      <documentation>Returns a token for the given username/password combination with a given expiration time. </documentation>
+      <input name="getToken2In" message="tns:getToken2In" />
+      <output name="getToken2Out" message="tns:getToken2Out" />
+    </operation>
+    <operation name="validateToken" parameterOrder="token">
+      <documentation>Validates a token for a particular service. </documentation>
+      <input name="validateToken3In" message="tns:validateToken3In" />
+      <output name="validateToken3Out" message="tns:validateToken3Out" />
+    </operation>
+  </portType>
+  <binding name="IAuthentication" type="tns:IAuthentication">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <operation name="getVersion">
+      <soap:operation soapAction="getVersion" style="rpc" />
+      <input name="getVersion0In">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getVersion0Out">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getToken">
+      <soap:operation soapAction="getToken" style="rpc" />
+      <input name="getToken1In">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getToken1Out">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="getToken">
+      <soap:operation soapAction="getToken" style="rpc" />
+      <input name="getToken2In">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="getToken2Out">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+    <operation name="validateToken">
+      <soap:operation soapAction="validateToken" style="rpc" />
+      <input name="validateToken3In">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </input>
+      <output name="validateToken3Out">
+        <soap:body use="encoded" namespace="http://arcweb.esri.com/v2" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </output>
+    </operation>
+  </binding>
+  <service name="Authentication">
+    <documentation>The Authentication Web Service is used to validate users of Restricted ArcWeb Services. The first time a client accesses a Restricted ArcWeb Service, it must call the Authentication Web Service with a user name and password over a Secure Hypertext Transfer Protocol (HTTPS) Secure Sockets Layer (SSL) connection. These security measures minimize the risk that an unauthorized user can access a Restricted ArcWeb Service by stealing valid login information. If the user and password are valid, the Authentication Web Service returns a token. The token is a binary encoded string that the client application uses to call Restricted ArcWeb Services.  </documentation>
+    <port name="IAuthentication" binding="tns:IAuthentication">
+      <soap:address location="https://arcweb.esri.com/services/v2/Authentication" />
+    </port>
+  </service>
+</definitions>
